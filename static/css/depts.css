@@ -1,0 +1,23 @@
+body {
+  font-family: "Open Sans",sans-serif;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+	background-color: #f2f2f3;
+}
+
+h1 {
+	text-align: center;
+  font-size: 3em;
+  font-weight: 300;
+  line-height: 1.25;
+  color: #01256e;
+}
+
+li a {
+	text-decoration: none;
+}
+
+li a:hover, li a:focus {
+	opacity: 0.8;
+	text-decoration: none;
+}

@@ -10,15 +10,6 @@ var uri = base + "/depts/?token=" + token;
   		$scope.depts = rawData.result.values;
   		console.log($scope.depts);
   	});
-    // this.dept = 1;
-
-    // this.setYear = function(value){
-    //   this.year = value;
-    // };
   }]);
 
 })();
-
-// d3.json(uri, function(error, rawData) {
-// 	console.log(rawData.result.values);
-// })

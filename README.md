@@ -1,1 +1,1 @@
-# pennCourseFilter
+# Penn Course Filter
