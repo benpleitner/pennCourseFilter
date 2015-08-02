@@ -1,5 +1,5 @@
 var token = "public";
-var base = "http://api.penncoursereview.com/v1//"
+var base = "http://api.penncoursereview.com/v1/";
 var uri = base + "/depts/?token=" + token;
 
 (function() {
@@ -8,8 +8,11 @@ var uri = base + "/depts/?token=" + token;
   app.controller("DepartmentController", ["$scope", "$http", function($scope, $http) {
   	$http.get(uri).success(function(rawData) {
   		$scope.depts = rawData.result.values;
-  		console.log($scope.depts);
   	});
-  }]);
 
+  	$scope.setPath = function(path) {
+  		var coursesUri = base + path + "/?token=" + token;
+  		amplify.store("hello", coursesUri);
+  	};
+  }]);
 })();

@@ -8,18 +8,19 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	 	<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/static/js/angular.min.js"></script>
+		<script type="text/javascript" src="/static/js/amplify.min.js"></script>
 
 		<link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/depts.css">
 	</head>
-	<body>
+	<body ng-controller="DepartmentController as depts">
 
 	<h1>Departments</h1>
 
-		<div class="container" ng-controller="DepartmentController as depts"> <!-- Length of depts is 169 -->
+		<div id="departments" class="container"> <!-- Length of depts is 169 -->
 			<div class="row">
 				<ul>
-					<li class="list-group-item" ng-repeat="dept in depts"><a href="specificDept.html">{{dept.name}} ({{dept.id}})</a></li>
+					<li class="list-group-item" ng-repeat="dept in depts"><a href="specificDept.html" ng-click="setPath(dept.path)">{{dept.name}} ({{dept.id}})</a></li>
 				</ul>
 			</div>
 		</div>
