@@ -1,0 +1,33 @@
+{
+	"Computer Science - BSE": {
+		"courses": [
+			{
+				"name": "CIS 110"
+			},
+			{
+				"name": "CIS 120"
+			},
+			{
+				"name": "CIS 121"
+			},
+			{
+				"name": "CIS 160"
+			},
+			{
+				"name": "CIS 240"
+			},
+			{
+				"name": "CIS 262"
+			},
+			{
+				"name": "CIS 320"
+			},
+			{
+				"name": "CIS 371"
+			},
+			{
+				"name": "CIS 380"
+			},
+		],
+	}
+}

@@ -45,7 +45,7 @@ h2 {
 
 #dataTable tbody {
   display: -webkit-flex;
-  height: 400px;
+  height: 297px;
   overflow: auto;
   -webkit-flex-flow: row wrap;
 }
@@ -76,6 +76,10 @@ th, td {
   border-top: 1px solid #ddd;
 }
 
+tbody tr ._0, #courseName {
+	width: 40%;
+}
+
 th {
   border-bottom: 1px solid black;
 }
@@ -86,12 +90,9 @@ th {
   line-height: 0px;
 }
 
-/* Difficulty pie chart */
-#difficultyPieChart h2 {
+/* Pie charts */
+.chart h2 {
 	margin-bottom: -80px;
-}
-
-#difficultyPieChart {
 }
 
 .dc-chart .pie-slice {

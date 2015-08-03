@@ -28,9 +28,7 @@ var spinner = new Spinner(opts).spin(target);
 
 d3.json(amplify.store("hello"), function(error, rawData) {
 	var courseIdTag = rawData.result.id; //Tag - for example "CIS"
-	var deptName = rawData.result.name;
-
-	// deptName.charAt(0).toUpperCase() + deptName.slice(1).toLowerCase()
+	var deptName = rawData.result.name; //Department name
 
 	document.getElementById("header").innerHTML = deptName;
 
@@ -69,34 +67,27 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 					totalStudents = 0,
 					avgDifficulty = 0,
 					totDifficulty = 0,
+					totCourseQuality = 0,
+					totAmountOfWork = 0,
 					numSemesters = 0;
 
 			data.result.values.forEach(function (d) {
-				// var numReviewers = d.num_reviewers,
-				// 		numStudents = d.num_students,
-				// 		difficulty = d.ratings.rDifficulty;
-				
 				totalReviewers += d.num_reviewers;
 				totalStudents += d.num_students;
+				totCourseQuality += parseFloat(d.ratings.rCourseQuality);
 				totDifficulty += parseFloat(d.ratings.rDifficulty);
+				totAmountOfWork += parseFloat(d.ratings.rWorkRequired);
 				numSemesters++;
 			});
 
 			avgDifficulty = totDifficulty / numSemesters;
+			var avgCourseQuality = totCourseQuality / numSemesters;
+			var avgAmountOfWork = totAmountOfWork / numSemesters;
 
-			//Assign a difficulty range number
-			if (avgDifficulty < 1) {
-				var difficultyNum = 0;
-			}
-			else if (avgDifficulty < 2) {
-				var difficultyNum = 1;
-			}
-			else if (avgDifficulty < 3) {
-				var difficultyNum = 2;
-			}
-			else {
-				var difficultyNum = 3;
-			}
+			//Assign a range number to ratings
+			var difficultyNum = getRating(avgDifficulty);
+			var qualityNum = getRating(avgCourseQuality);
+			var amountOfWorkNum = getRating(avgAmountOfWork);
 
 			forCharts.push({
 				course: courseNumArray[j],
@@ -104,7 +95,11 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 				numReviewers: totalReviewers,
 				numStudents: totalStudents,
 				avgDifficulty: avgDifficulty,
-				difficultyNum: difficultyNum
+				difficultyNum: difficultyNum,
+				avgCourseQuality: avgCourseQuality,
+				qualityNum: qualityNum,
+				avgAmountOfWork: avgAmountOfWork,
+				amountOfWorkNum: amountOfWorkNum
 			});
 
 			if (j == coursePathArray.length - 1) {
@@ -112,6 +107,8 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 				
 				makeDataTable(forCharts, ndx);
 				makeDifficultyPieChart(forCharts, ndx);
+				makeQaulityPieChart(forCharts, ndx);
+				makeAmountOfWorkPieChart(forCharts, ndx);
 			}
 		});
 	};
@@ -132,7 +129,9 @@ d3.json(amplify.store("hello"), function(error, rawData) {
         .size([Infinity])
         .columns([
           function(d) { return d.course + " (" + d.courseName + ")"; },
-          function(d) { return d.avgDifficulty.toFixed(2); }
+          function(d) { return d.avgCourseQuality.toFixed(2); },
+          function(d) { return d.avgDifficulty.toFixed(2); },
+          function(d) { return d.avgAmountOfWork.toFixed(2); }
         ])
         .sortBy(function (d) {
           return d.course;
@@ -150,7 +149,7 @@ d3.json(amplify.store("hello"), function(error, rawData) {
     });
 
     var difficultyGroup = difficulty.group().reduceSum(function(d) {
-      return d.difficultyNum;
+      return 1;
     });
 
     pieChart = dc.pieChart("#difficultyPieChart");
@@ -185,6 +184,87 @@ d3.json(amplify.store("hello"), function(error, rawData) {
         .transitionDuration(700);
 
     dc.renderAll();
+	}
+
+	function makeQaulityPieChart(forCharts, ndx) {
+    var quality = ndx.dimension(function(d) {
+      return d.qualityNum;
+    });
+
+    var qualityGroup = quality.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    pieChart = dc.pieChart("#qualityPieChart");
+    
+    pieChart.width(342)
+        .height(451)
+        .dimension(quality)
+        .group(qualityGroup)
+        .innerRadius(60)
+        .radius(100)
+        .label(function (d) {
+          if (d.key == 0) {
+            return "0 - 1";
+          } else if (d.key == 1) {
+            return "1 - 2";
+          } else if (d.key == 2) {
+            return "2 - 3";
+          } else {
+          	return "3 - 4";
+          }
+        })
+        .transitionDuration(700);
+
+    dc.renderAll();
+	}
+
+	function makeAmountOfWorkPieChart(forCharts, ndx) {
+    var work = ndx.dimension(function(d) {
+      return d.amountOfWorkNum;
+    });
+
+    var workGroup = work.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    pieChart = dc.pieChart("#amountOfWorkPieChart");
+    
+    pieChart.width(342)
+        .height(451)
+        .dimension(work)
+        .group(workGroup)
+        .innerRadius(60)
+        .radius(100)
+        .label(function (d) {
+          if (d.key == 0) {
+            return "0 - 1";
+          } else if (d.key == 1) {
+            return "1 - 2";
+          } else if (d.key == 2) {
+            return "2 - 3";
+          } else {
+          	return "3 - 4";
+          }
+        })
+        .transitionDuration(700);
+
+    dc.renderAll();
+	}
+
+	function getRating(value) {
+		if (value < 1) {
+			return 0;;
+		}
+		else if (value < 2) {
+			return 1;
+		}
+		else if (value < 3) {
+			return 2;
+		}
+		else {
+			return 3;
+		}
 	}
 
 });

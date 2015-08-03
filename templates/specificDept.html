@@ -28,17 +28,33 @@
 				<table id="dataTable">
 					<thead>
 			      <tr>
-			        <th>Course</th>
+			        <th id="courseName">Course</th>
+			        <th>Average Quality</th>
 			        <th>Average Difficulty</th>
+			        <th>Amount of Work</th>
 			      </tr>
 			    </thead>
 				</table>
 			</div>
 
-			<div class="well col-md-4">
-				<span id="difficultyPieChart">
-					<h2>Course Difficulty</h2>
-				</span>
+			<div class="row">
+				<div class="well col-md-4">
+					<span id="difficultyPieChart" class="chart">
+						<h2>Course Difficulty</h2>
+					</span>
+				</div>
+
+				<div class="well col-md-4">
+					<span id="qualityPieChart" class="chart">
+						<h2>Course Quality</h2>
+					</span>
+				</div>
+
+				<div class="well col-md-4">
+					<span id="amountOfWorkPieChart" class="chart">
+						<h2>Amount of Work</h2>
+					</span>
+				</div>
 			</div>
 		</div>
 
