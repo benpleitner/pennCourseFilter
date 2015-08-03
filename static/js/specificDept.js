@@ -32,7 +32,7 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 
 	// deptName.charAt(0).toUpperCase() + deptName.slice(1).toLowerCase()
 
-	document.getElementById("header").innerHTML = deptName + " Department";
+	document.getElementById("header").innerHTML = deptName;
 
 	//Build an array that holds all the paths to each courses json files
 	var coursePathArray = [],
@@ -84,23 +84,39 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 
 			avgDifficulty = totDifficulty / numSemesters;
 
+			//Assign a difficulty range number
+			if (avgDifficulty < 1) {
+				var difficultyNum = 0;
+			}
+			else if (avgDifficulty < 2) {
+				var difficultyNum = 1;
+			}
+			else if (avgDifficulty < 3) {
+				var difficultyNum = 2;
+			}
+			else {
+				var difficultyNum = 3;
+			}
+
 			forCharts.push({
 				course: courseNumArray[j],
 				courseName: courseNameArray[j],
 				numReviewers: totalReviewers,
 				numStudents: totalStudents,
-				avgDifficulty: avgDifficulty
+				avgDifficulty: avgDifficulty,
+				difficultyNum: difficultyNum
 			});
 
 			if (j == coursePathArray.length - 1) {
-				makeCharts(forCharts);
+    		var ndx = crossfilter(forCharts); //Prepare the data to be crossfiltered
+				
+				makeDataTable(forCharts, ndx);
+				makeDifficultyPieChart(forCharts, ndx);
 			}
 		});
 	};
 
-	function makeCharts(forCharts) {
-    var ndx = crossfilter(forCharts); //Prepare the data to be crossfiltered
-
+	function makeDataTable(forCharts, ndx) {
     var coursesInfo = ndx.dimension(function(d) {
       return d.course;
     });
@@ -126,6 +142,49 @@ d3.json(amplify.store("hello"), function(error, rawData) {
     dc.renderAll();
     spinner.stop();
     $(".container").css("display", "inherit");
+	}
+
+	function makeDifficultyPieChart(forCharts, ndx) {
+    var difficulty = ndx.dimension(function(d) {
+      return d.difficultyNum;
+    });
+
+    var difficultyGroup = difficulty.group().reduceSum(function(d) {
+      return d.difficultyNum;
+    });
+
+    pieChart = dc.pieChart("#difficultyPieChart");
+    
+    pieChart.width(342)
+        .height(451)
+        .dimension(difficulty)
+        .group(difficultyGroup)
+        .innerRadius(60)
+        .radius(100)
+        // .colors(d3.scale.ordinal().domain(["occupied", "semi", "offHours"]).range(["#0b50c2", "#0092cc", "#00b4b5"]))
+        // .colorAccessor(function(d) {
+        //   if (d.key == 1) {
+        //     return "occupied";
+        //   } else if (d.key == 0.5) {
+        //     return "semi";
+        //   } else {
+        //     return "offHours";
+        //   }
+        // })
+        .label(function (d) {
+          if (d.key == 0) {
+            return "0 - 1";
+          } else if (d.key == 1) {
+            return "1 - 2";
+          } else if (d.key == 2) {
+            return "2 - 3";
+          } else {
+          	return "3 - 4";
+          }
+        })
+        .transitionDuration(700);
+
+    dc.renderAll();
 	}
 
 });

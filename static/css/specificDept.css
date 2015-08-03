@@ -13,12 +13,21 @@ h1 {
   color: #01256e;
 }
 
+h2 {
+	text-align: center;
+}
+
+.well {
+	margin-top: 20px;
+	height: 400px;
+}
+
 /* Data table */
 #dataTable {
   display: block;
   width: 100%;
   border: 1px solid #eee;
-  max-height: 320px;
+  max-height: 337px;
   overflow: auto;
   border: 1px solid black;
 }
@@ -75,4 +84,17 @@ th {
   display: none;
   padding: 0px;
   line-height: 0px;
+}
+
+/* Difficulty pie chart */
+#difficultyPieChart h2 {
+	margin-bottom: -80px;
+}
+
+#difficultyPieChart {
+}
+
+.dc-chart .pie-slice {
+  fill: black;
+  cursor: pointer;
 }
