@@ -83,17 +83,20 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 			avgDifficulty = totDifficulty / numSemesters;
 			var avgCourseQuality = totCourseQuality / numSemesters;
 			var avgAmountOfWork = totAmountOfWork / numSemesters;
+			var avgNumStudents = totalStudents / numSemesters;
 
 			//Assign a range number to ratings
 			var difficultyNum = getRating(avgDifficulty);
 			var qualityNum = getRating(avgCourseQuality);
 			var amountOfWorkNum = getRating(avgAmountOfWork);
+			var studentNumber = getStudentNumber(avgNumStudents);
 
 			forCharts.push({
 				course: courseNumArray[j],
 				courseName: courseNameArray[j],
 				numReviewers: totalReviewers,
-				numStudents: totalStudents,
+				numStudents: avgNumStudents,
+				studentNumber: studentNumber,
 				avgDifficulty: avgDifficulty,
 				difficultyNum: difficultyNum,
 				avgCourseQuality: avgCourseQuality,
@@ -109,6 +112,7 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 				makeDifficultyPieChart(forCharts, ndx);
 				makeQaulityPieChart(forCharts, ndx);
 				makeAmountOfWorkPieChart(forCharts, ndx);
+				makeStudentRowChart(forCharts, ndx);
 			}
 		});
 	};
@@ -252,6 +256,56 @@ d3.json(amplify.store("hello"), function(error, rawData) {
     dc.renderAll();
 	}
 
+	function makeStudentRowChart(forCharts, ndx) {
+      var numStudents = ndx.dimension(function(d) {
+        return d.studentNumber;
+      });
+
+      var numStudentsGroup = numStudents.group().reduceSum(function(d) {
+        return 1;
+      });
+
+      rowChart = dc.rowChart("#numStudentsRowChart");
+
+      rowChart.width(350)
+            .height(350)
+            .margins({top: 100, right: 10, bottom: 30, left: 10})
+            .dimension(numStudents)
+            .group(numStudentsGroup)
+            .elasticX(true)
+            .gap(1)
+            .x(d3.scale.linear().domain([-1, 8]))
+            .label(function(d) {
+              var num = d.key;
+              switch (num) {
+                case 0:
+                  return "1 - 50";
+                case 1:
+                  return "50 - 100";
+                case 2:
+                  return "100 - 200";
+                case 3:
+                  return "200+";
+              }
+            })
+            .transitionDuration(700);
+
+      dc.renderAll();
+
+ 		 	addXAxis(rowChart, "Nuber of Courses");
+	}
+
+	//Helper function that adds an x-axis label to the row chart
+  function addXAxis(chartToUpdate, displayText) {
+      chartToUpdate.svg()
+          .append("text")
+          .attr("class", "x-axis-label")
+          .attr("text-anchor", "middle")
+          .attr("x", chartToUpdate.width() / 2)
+          .attr("y", chartToUpdate.height())
+          .text(displayText);
+  }
+
 	function getRating(value) {
 		if (value < 1) {
 			return 0;;
@@ -260,6 +314,21 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 			return 1;
 		}
 		else if (value < 3) {
+			return 2;
+		}
+		else {
+			return 3;
+		}
+	}
+
+	function getStudentNumber(numStudents) {
+		if (numStudents < 50) {
+			return 0;
+		}
+		else if (numStudents < 100) {
+			return 1;
+		}
+		else if (numStudents < 200) {
 			return 2;
 		}
 		else {

@@ -13,8 +13,14 @@ h1 {
   color: #01256e;
 }
 
-h2 {
+h2, h4 {
 	text-align: center;
+}
+
+/* For the sub header on the filters */
+h4 {
+  margin-top: 85px;
+  margin-bottom: -70px;
 }
 
 .well {
@@ -96,6 +102,12 @@ th {
 }
 
 .dc-chart .pie-slice {
+  fill: black;
+  cursor: pointer;
+}
+
+/* Row chart */
+.dc-chart g.row text {
   fill: black;
   cursor: pointer;
 }
