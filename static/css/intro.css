@@ -1,0 +1,75 @@
+body {
+  font-family: "Open Sans",sans-serif;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+	background-color: #f2f2f3;
+}
+
+h1 {
+	text-align: center;
+  font-size: 4em;
+  line-height: 1.25;
+  color: #01256e;
+  margin: 50px 50px;
+}
+
+p {
+	font-size: 2em;
+	opacity: 0.8;
+}
+
+#stackButton {
+	text-align: center;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.btn-geckoboard {
+  display: inline-block;
+  padding: 10px 16px;
+  margin-bottom: 0;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  -webkit-transition: color 0.3s ease, background 0.3s ease;
+  -moz-transition: color 0.3s ease, background 0.3s ease;
+  -ms-transition: color 0.3s ease, background 0.3s ease;
+  -o-transition: color 0.3s ease, background 0.3s ease;
+}
+
+.btn-group-lg>.btn, .btn-lg {
+  padding: 10px 100px 16px 100px;
+  font-size: 2em;
+  line-height: 1.3333333;
+}
+
+.btn-outline {
+  color: #062946;
+  background-color: transparent;
+  border-color: #062946;
+}
+
+.btn-geckoboard:hover {
+  -webkit-transition: color 0.3s ease, background 0.3s ease;
+  -moz-transition: color 0.3s ease, background 0.3s ease;
+  -ms-transition: color 0.3s ease, background 0.3s ease;
+  -o-transition: color 0.3s ease, background 0.3s ease;
+  background-color: #062946;
+  color: white;
+  text-decoration: none;
+}
+
+.btn-geckoboard:focus {
+    background-color: rgba(0, 0, 0, 0);
+    color: #062946;
+    text-decoration: none;
+}

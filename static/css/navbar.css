@@ -1,0 +1,111 @@
+nav.navbar-myPage {
+    background-color: rgba(235, 234, 237, 0);
+    border-color: rgba(235, 234, 237, 0);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+nav.navbar-myPage a {
+    color: #01256e;
+    font-family: "Open Sans",sans-serif;
+    font-weight: 300;
+}
+
+nav.navbar-myPage ul.navbar-nav a {
+    color: #01256e;
+    font-size: 14px;
+    border-style: solid;
+    border-width: 0 0 2px 0;
+    border-color: rgba(0, 0, 0, 0.0);
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+
+nav.navbar-myPage .navbar-brand, nav.navbar-myPage .navbar-brand:hover {
+    color: #01256e;
+}
+
+nav.navbar-myPage ul.navbar-nav a:hover,
+nav.navbar-myPage ul.navbar-nav a:visited,
+nav.navbar-myPage ul.navbar-nav a:focus,
+nav.navbar-myPage ul.navbar-nav a:active {
+    background-color: rgba(250, 250, 250, 0);
+}
+
+nav.navbar-myPage ul.navbar-nav a:hover {
+    color: #01256e;
+    border-color: #01256e;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: rgba(250, 250, 250, 0);
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #01256e;
+}
+
+.navbar-toggle .icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+}
+
+/* Fix the navbar social media icons on smaller screens */
+#sScreen {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    #fullWidth {
+        display: none;
+    }
+
+    #sScreen {
+        display: inherit;
+        margin-left: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        line-height: 20px;
+    }
+}
+
+/* Fix for Safari */
+@media screen and (min-color-index: 0) and(-webkit-min-device-pixel-ratio: 0) {@media
+{
+    .safari_only { 
+        margin-top: -12px;
+    }
+
+    #sScreen {
+        margin-top: 0px;
+        margin-bottom: 15px;
+    }
+}}
+
+/* Safari 6.1-7.0 */
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-color-index: 0)
+{  
+   .safari_only {(;
+        margin-top: -12px;
+    );}
+
+   #sScreen {(;
+        margin-top: 0px;
+        margin-bottom: 15px;
+    );}
+}
+
+/* Safari 7.1+ (8.0 is the latest version of Safari at this time) */
+_::-webkit-full-page-media, _:future, :root .safari_only {
+    margin-top: -12px;
+}
+
+_::-webkit-full-page-media, _:future, :root #sScreen {
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
