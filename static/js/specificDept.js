@@ -69,6 +69,8 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 					totDifficulty = 0,
 					totCourseQuality = 0,
 					totAmountOfWork = 0,
+					totRecForMajor = 0,
+					totRecForNonMajor = 0,
 					numSemesters = 0;
 
 			data.result.values.forEach(function (d) {
@@ -77,6 +79,8 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 				totCourseQuality += parseFloat(d.ratings.rCourseQuality);
 				totDifficulty += parseFloat(d.ratings.rDifficulty);
 				totAmountOfWork += parseFloat(d.ratings.rWorkRequired);
+				totRecForMajor += parseFloat(d.ratings.rRecommendMajor);
+				totRecForNonMajor += parseFloat(d.ratings.rRecommendNonMajor);
 				numSemesters++;
 			});
 
@@ -84,12 +88,16 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 			var avgCourseQuality = totCourseQuality / numSemesters;
 			var avgAmountOfWork = totAmountOfWork / numSemesters;
 			var avgNumStudents = totalStudents / numSemesters;
+			var avgRecForMajor = totRecForMajor / numSemesters;
+			var avgRecForNonMajor = totRecForNonMajor / numSemesters;
 
 			//Assign a range number to ratings
 			var difficultyNum = getRating(avgDifficulty);
 			var qualityNum = getRating(avgCourseQuality);
 			var amountOfWorkNum = getRating(avgAmountOfWork);
 			var studentNumber = getStudentNumber(avgNumStudents);
+			var recForMajorNum = getRating(avgRecForMajor);
+			var recForNonMajorNum = getRating(avgRecForNonMajor);
 
 			forCharts.push({
 				course: courseNumArray[j],
@@ -102,7 +110,11 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 				avgCourseQuality: avgCourseQuality,
 				qualityNum: qualityNum,
 				avgAmountOfWork: avgAmountOfWork,
-				amountOfWorkNum: amountOfWorkNum
+				amountOfWorkNum: amountOfWorkNum,
+				avgRecForMajor: avgRecForMajor,
+				recForMajorNum: recForMajorNum,
+				avgRecForNonMajor: avgRecForNonMajor,
+				recForNonMajorNum: recForNonMajorNum
 			});
 
 			if (j == coursePathArray.length - 1) {
@@ -113,6 +125,8 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 				makeQaulityPieChart(forCharts, ndx);
 				makeAmountOfWorkPieChart(forCharts, ndx);
 				makeStudentRowChart(forCharts, ndx);
+				makeRecForMajorRowChart(forCharts, ndx);
+				makeRecForNonMajorRowChart(forCharts, ndx);	
 			}
 		});
 	};
@@ -278,53 +292,127 @@ d3.json(amplify.store("hello"), function(error, rawData) {
 	}
 
 	function makeStudentRowChart(forCharts, ndx) {
-      var numStudents = ndx.dimension(function(d) {
-        return d.studentNumber;
-      });
+    var numStudents = ndx.dimension(function(d) {
+      return d.studentNumber;
+    });
 
-      var numStudentsGroup = numStudents.group().reduceSum(function(d) {
-        return 1;
-      });
+    var numStudentsGroup = numStudents.group().reduceSum(function(d) {
+      return 1;
+    });
 
-      rowChart = dc.rowChart("#numStudentsRowChart");
+    rowChart = dc.rowChart("#numStudentsRowChart");
 
-      rowChart.width(350)
-            .height(350)
-            .margins({top: 100, right: 10, bottom: 30, left: 10})
-            .dimension(numStudents)
-            .group(numStudentsGroup)
-            .elasticX(true)
-            .gap(1)
-            .x(d3.scale.linear().domain([-1, 8]))
-            .label(function(d) {
-              var num = d.key;
-              switch (num) {
-                case 0:
-                  return "1 - 50";
-                case 1:
-                  return "50 - 100";
-                case 2:
-                  return "100 - 200";
-                case 3:
-                  return "200+";
-              }
-            })
-            .transitionDuration(700);
+    rowChart.width(350)
+          .height(350)
+          .margins({top: 100, right: 10, bottom: 30, left: 10})
+          .dimension(numStudents)
+          .group(numStudentsGroup)
+          .elasticX(true)
+          .gap(1)
+          .x(d3.scale.linear().domain([-1, 8]))
+          .label(function(d) {
+            var num = d.key;
+            switch (num) {
+              case 0:
+                return "1 - 50";
+              case 1:
+                return "50 - 100";
+              case 2:
+                return "100 - 200";
+              case 3:
+                return "200+";
+            }
+          })
+          .transitionDuration(700);
 
-      dc.renderAll();
+    dc.renderAll();
 
- 		 	addXAxis(rowChart, "Nuber of Courses");
+		addXAxis(rowChart, "Nuber of Courses");
+	}
+
+	function makeRecForMajorRowChart(forCharts, ndx) {
+    var major = ndx.dimension(function(d) {
+      return d.recForMajorNum;
+    });
+
+    var majorGroup = major.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    rowChart = dc.rowChart("#recForMajorRowChart");
+
+    rowChart.width(350)
+          .height(350)
+          .margins({top: 100, right: 10, bottom: 30, left: 10})
+          .dimension(major)
+          .group(majorGroup)
+          .elasticX(true)
+          .gap(1)
+          .x(d3.scale.linear().domain([-1, 8]))
+          .label(function(d) {
+	          if (d.key == 0) {
+	            return "0 - 1";
+	          } else if (d.key == 1) {
+	            return "1 - 2";
+	          } else if (d.key == 2) {
+	            return "2 - 3";
+	          } else {
+	          	return "3 - 4";
+	          }
+          })
+          .transitionDuration(700);
+
+    dc.renderAll();
+
+		addXAxis(rowChart, "Nuber of Courses");
+}
+
+	function makeRecForNonMajorRowChart(forCharts, ndx) {
+    var nonMajor = ndx.dimension(function(d) {
+      return d.recForNonMajorNum;
+    });
+
+    var nonMajorGroup = nonMajor.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    rowChart = dc.rowChart("#recForNonMajorRowChart");
+
+    rowChart.width(350)
+          .height(350)
+          .margins({top: 100, right: 10, bottom: 30, left: 10})
+          .dimension(nonMajor)
+          .group(nonMajorGroup)
+          .elasticX(true)
+          .gap(1)
+          .x(d3.scale.linear().domain([-1, 8]))
+          .label(function(d) {
+	          if (d.key == 0) {
+	            return "0 - 1";
+	          } else if (d.key == 1) {
+	            return "1 - 2";
+	          } else if (d.key == 2) {
+	            return "2 - 3";
+	          } else {
+	          	return "3 - 4";
+	          }
+          })
+          .transitionDuration(700);
+
+    dc.renderAll();
+
+		addXAxis(rowChart, "Nuber of Courses");
 	}
 
 	//Helper function that adds an x-axis label to the row chart
   function addXAxis(chartToUpdate, displayText) {
-      chartToUpdate.svg()
-          .append("text")
-          .attr("class", "x-axis-label")
-          .attr("text-anchor", "middle")
-          .attr("x", chartToUpdate.width() / 2)
-          .attr("y", chartToUpdate.height())
-          .text(displayText);
+    chartToUpdate.svg()
+        .append("text")
+        .attr("class", "x-axis-label")
+        .attr("text-anchor", "middle")
+        .attr("x", chartToUpdate.width() / 2)
+        .attr("y", chartToUpdate.height())
+        .text(displayText);
   }
 
 	function getRating(value) {
