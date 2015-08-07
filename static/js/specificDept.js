@@ -28,6 +28,8 @@ var spinner = new Spinner(opts).spin(target);
 
 d3.json(amplify.store("uri"), function(error, rawData) {
 	var courseIdTag = rawData.result.id; //Tag - for example "CIS"
+  amplify.store("deptName", courseIdTag);
+	
 	var deptName = rawData.result.name; //Department name
 
 	document.getElementById("header").innerHTML = deptName;

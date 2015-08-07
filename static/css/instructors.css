@@ -4,3 +4,71 @@ body {
   text-rendering: optimizeLegibility;
 	background-color: #f2f2f3;
 }
+
+/* Data table */
+#dataTable {
+  display: block;
+  width: 100%;
+  border: 1px solid #eee;
+  max-height: 337px;
+  overflow: auto;
+  border: 1px solid black;
+}
+
+#dataTable thead {
+  display: -webkit-flex;
+  -webkit-flex-flow: row;
+}
+
+#dataTable thead tr {
+  display: -webkit-flex;
+  width: 100%;
+  -webkit-align-items: stretch;
+}
+
+#dataTable tbody {
+  display: -webkit-flex;
+  height: 297px;
+  overflow: auto;
+  -webkit-flex-flow: row wrap;
+}
+#dataTable tbody tr {
+  display: -webkit-flex;
+  width: 100%;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+table {
+  max-width: 100%;
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th, td {
+  padding: 8px;
+  width: 20%;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+
+/*tbody tr ._0, #courseName {
+	width: 20%;
+}*/
+
+th {
+  border-bottom: 1px solid black;
+}
+
+.dc-table-group, .dc-table-label {
+  display: none;
+  padding: 0px;
+  line-height: 0px;
+}
