@@ -1,33 +1,130 @@
 {
-	"Computer Science - BSE": {
-		"courses": [
-			{
-				"name": "CIS 110"
-			},
-			{
-				"name": "CIS 120"
-			},
-			{
-				"name": "CIS 121"
-			},
-			{
-				"name": "CIS 160"
-			},
-			{
-				"name": "CIS 240"
-			},
-			{
-				"name": "CIS 262"
-			},
-			{
-				"name": "CIS 320"
-			},
-			{
-				"name": "CIS 371"
-			},
-			{
-				"name": "CIS 380"
-			},
-		],
-	}
+	"majors": [
+		{
+			"major_name": "Computer Science - BSE",
+			"department_courses": [
+				{
+					"course": "CIS 110"
+				},
+				{
+					"course": "CIS 120"
+				},
+				{
+					"course": "CIS 121"
+				},
+				{
+					"course": "CIS 160"
+				},
+				{
+					"course": "CIS 240"
+				},
+				{
+					"course": "CIS 262"
+				},
+				{
+					"course": "CIS 320"
+				},
+				{
+					"course": "CIS 371"
+				},
+				{
+					"course": "CIS 380"
+				}
+			],
+			"other_courses": [
+				{
+					"course": "MATH 104"
+				},
+				{
+					"course": "MATH 114"
+				},
+				{
+					"course": "PHYS 150"
+				},
+				{
+					"course": "PHYS 151"
+				}
+			]
+		},
+		{
+			"major_name": "Computer Science - BAS",
+			"department_courses": [
+				{
+					"course": "CIS 110"
+				},
+				{
+					"course": "CIS 120"
+				},
+				{
+					"course": "CIS 121"
+				},
+				{
+					"course": "CIS 160"
+				},
+				{
+					"course": "CIS 240"
+				},
+				{
+					"course": "CIS 262"
+				},
+				{
+					"course": "CIS 320"
+				}
+			],
+			"other_courses": [
+				{
+					"course": "MATH 104"
+				},
+				{
+					"course": "MATH 114"
+				}
+			]
+		},
+		{
+			"major_name": "Computer Science - BSE",
+			"department_courses": [
+				{
+					"course": "CIS 110"
+				},
+				{
+					"course": "CIS 120"
+				},
+				{
+					"course": "CIS 121"
+				},
+				{
+					"course": "CIS 160"
+				},
+				{
+					"course": "CIS 240"
+				},
+				{
+					"course": "CIS 262"
+				},
+				{
+					"course": "CIS 320"
+				},
+				{
+					"course": "CIS 371"
+				},
+				{
+					"course": "CIS 380"
+				}
+			],
+			"other_courses": [
+				{
+					"course": "MATH 104"
+				},
+				{
+					"course": "MATH 114"
+				},
+				{
+					"course": "PHYS 150"
+				},
+				{
+					"course": "PHYS 151"
+				}
+			]
+		},
+	]
 }

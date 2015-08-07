@@ -26,7 +26,7 @@ $(".container").css("display", "none");
 var target = document.getElementById("spin");
 var spinner = new Spinner(opts).spin(target);
 
-d3.json(amplify.store("hello"), function(error, rawData) {
+d3.json(amplify.store("uri"), function(error, rawData) {
 	var courseIdTag = rawData.result.id; //Tag - for example "CIS"
 	var deptName = rawData.result.name; //Department name
 

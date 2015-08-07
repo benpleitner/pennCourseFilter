@@ -12,7 +12,7 @@ var uri = base + "/depts/?token=" + token;
 
   	$scope.setPath = function(path) {
   		var coursesUri = base + path + "/?token=" + token;
-  		amplify.store("hello", coursesUri);
+  		amplify.store("uri", coursesUri);
   	};
   }]);
 })();
