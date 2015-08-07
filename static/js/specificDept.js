@@ -148,7 +148,10 @@ d3.json(amplify.store("uri"), function(error, rawData) {
         })
         .size([Infinity])
         .columns([
-          function(d) { return d.course + " (" + d.courseName + ")"; },
+          function(d) {
+          	// document.getElementsByClassName("_0").innerHTML = "Hello";
+          	return d.course + " (" + d.courseName + ")";
+          },
           function(d) {
 						if (isNaN(d.avgCourseQuality)) {
 							return "No data";
@@ -316,12 +319,14 @@ d3.json(amplify.store("uri"), function(error, rawData) {
             var num = d.key;
             switch (num) {
               case 0:
-                return "1 - 50";
+                return "1 - 25";
               case 1:
-                return "50 - 100";
+              	return "25 - 50";
               case 2:
-                return "100 - 200";
+                return "50 - 100";
               case 3:
+                return "100 - 200";
+              case 4:
                 return "200+";
             }
           })
@@ -436,21 +441,23 @@ d3.json(amplify.store("uri"), function(error, rawData) {
 	}
 
 	function getStudentNumber(numStudents) {
-		if (numStudents < 50) {
+		if (numStudents < 25) {
 			return 0;
 		}
-		else if (numStudents < 100) {
+		else if (numStudents < 50) {
 			return 1;
 		}
-		else if (numStudents < 200) {
+		else if (numStudents < 100) {
 			return 2;
+		}
+		else if (numStudents < 200) {
+			return 3;
 		}
 		else if (isNaN(numStudents)) {
 			return;
 		}
 		else {
-			return 3;
+			return 4;
 		}
 	}
-
 });

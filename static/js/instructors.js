@@ -45,18 +45,46 @@ d3.json(base + "/instructors/?token=" + token, function(error, rawData) {
 
 	function buildData(instructorPath, i) {
 		d3.json(base + instructorPath + "/reviews/?token=" + token, function(error, data) {
-			firstName = data.result.values[0].instructor.first_name;
-			lastName = data.result.values[0].instructor.last_name;
+			var firstName = data.result.values[0].instructor.first_name,
+					lastName = data.result.values[0].instructor.last_name,
+					totInstructorQaulity = 0,
+					totDifficulty = 0,
+					totWork = 0,
+					numSemesters = 0;
+
+			data.result.values.forEach(function (d) {
+				totInstructorQaulity += parseFloat(d.ratings.rInstructorQuality);
+				totDifficulty += parseFloat(d.ratings.rDifficulty);
+				totWork += parseFloat(d.ratings.rWorkRequired);
+				numSemesters++;
+			});
+
+			var avgInstructorQuality = totInstructorQaulity / numSemesters,
+					avgInstructorDifficulty = totDifficulty / numSemesters;
+					avgAmountOfWork = totWork / numSemesters;
+
+			var instructorQualityNum = getRating(avgInstructorQuality),
+					instructorDifficultyNum = getRating(avgInstructorDifficulty),
+					instructorWorkNum = getRating(avgAmountOfWork);
 
 			forCharts.push({
 				firstName: firstName,
-				lastName: lastName
+				lastName: lastName,
+				avgInstructorQuality: avgInstructorQuality,
+				instructorQualityNum: instructorQualityNum,
+				avgInstructorDifficulty: avgInstructorDifficulty,
+				instructorDifficultyNum: instructorDifficultyNum,
+				avgAmountOfWork: avgAmountOfWork,
+				instructorWorkNum: instructorWorkNum
 			})
 
 			if (i == instructorPathArray.length - 1) {
 	  		var ndx = crossfilter(forCharts); //Prepare the data to be crossfiltered
 				
 				makeDataTable(forCharts, ndx);
+				makeInstructorQualityPieChart(forCharts, ndx);
+				makeInstructorDifficultyPieChart(forCharts, ndx);
+				makeInstructorAmountOfWorkPieChart(forCharts, ndx);
 			}
 		});
 	}
@@ -76,15 +104,156 @@ d3.json(base + "/instructors/?token=" + token, function(error, rawData) {
 	      })
 	      .size([Infinity])
 	      .columns([
-	        function(d) { return d.firstName + " " + d.lastName; }
-	      ])
+	        function(d) { return d.firstName + " " + d.lastName; },
+          function(d) {
+						if (isNaN(d.avgInstructorQuality)) {
+							return "No data";
+						}
+						else {
+          		return d.avgInstructorQuality.toFixed(2);
+          	}
+          },
+          function(d) {
+						if (isNaN(d.avgInstructorDifficulty)) {
+							return "No data";
+						}
+						else {
+          		return d.avgInstructorDifficulty.toFixed(2);
+          	}
+          },
+          function(d) {
+						if (isNaN(d.avgAmountOfWork)) {
+							return "No data";
+						}
+						else {
+          		return d.avgAmountOfWork.toFixed(2);
+          	}
+          }
+        ])
 	      .sortBy(function (d) {
-	        return d.course;
+	        return d.lastName;
 	      })
 	      .order(d3.ascending);
 
 	  dc.renderAll();
     spinner.stop();
     $(".container").css("display", "inherit");
+	}
+
+	function makeInstructorQualityPieChart(forCharts, ndx) {
+    var quality = ndx.dimension(function(d) {
+      return d.instructorQualityNum;
+    });
+
+    var qualityGroup = quality.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    pieChart = dc.pieChart("#qualityPieChart");
+    
+    pieChart.width(342)
+        .height(451)
+        .dimension(quality)
+        .group(qualityGroup)
+        .innerRadius(60)
+        .radius(100)
+        .label(function (d) {
+          if (d.key == 0) {
+            return "0 - 1";
+          } else if (d.key == 1) {
+            return "1 - 2";
+          } else if (d.key == 2) {
+            return "2 - 3";
+          } else {
+          	return "3 - 4";
+          }
+        })
+        .transitionDuration(700);
+
+    dc.renderAll();
+	}
+
+	function makeInstructorDifficultyPieChart(forCharts, ndx) {
+    var difficulty = ndx.dimension(function(d) {
+      return d.instructorDifficultyNum;
+    });
+
+    var difficultyGroup = difficulty.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    pieChart = dc.pieChart("#difficultyPieChart");
+    
+    pieChart.width(342)
+        .height(451)
+        .dimension(difficulty)
+        .group(difficultyGroup)
+        .innerRadius(60)
+        .radius(100)
+        .label(function (d) {
+          if (d.key == 0) {
+            return "0 - 1";
+          } else if (d.key == 1) {
+            return "1 - 2";
+          } else if (d.key == 2) {
+            return "2 - 3";
+          } else {
+          	return "3 - 4";
+          }
+        })
+        .transitionDuration(700);
+
+    dc.renderAll();
+	}
+
+	function makeInstructorAmountOfWorkPieChart(forCharts, ndx) {
+    var work = ndx.dimension(function(d) {
+      return d.instructorWorkNum;
+    });
+
+    var workGroup = work.group().reduceSum(function(d) {
+      return 1;
+    });
+
+    pieChart = dc.pieChart("#amountOfWorkPieChart");
+    
+    pieChart.width(342)
+        .height(451)
+        .dimension(work)
+        .group(workGroup)
+        .innerRadius(60)
+        .radius(100)
+        .label(function (d) {
+          if (d.key == 0) {
+            return "0 - 1";
+          } else if (d.key == 1) {
+            return "1 - 2";
+          } else if (d.key == 2) {
+            return "2 - 3";
+          } else {
+          	return "3 - 4";
+          }
+        })
+        .transitionDuration(700);
+
+    dc.renderAll();
+	}
+
+	function getRating(value) {
+		if (value < 1) {
+			return 0;;
+		}
+		else if (value < 2) {
+			return 1;
+		}
+		else if (value < 3) {
+			return 2;
+		}
+		else if (isNaN(value)) {
+			return;
+		}
+		else {
+			return 3;
+		}
 	}
 });
