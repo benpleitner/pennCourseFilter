@@ -74,9 +74,9 @@ th, td {
   border-top: 1px solid #ddd;
 }
 
-/*tbody tr ._0, #courseName {
-	width: 20%;
-}*/
+tbody tr ._0, #instructorName {
+	width: 40%;
+}
 
 th {
   border-bottom: 1px solid black;

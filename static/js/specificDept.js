@@ -116,7 +116,8 @@ d3.json(amplify.store("uri"), function(error, rawData) {
 				avgRecForMajor: avgRecForMajor,
 				recForMajorNum: recForMajorNum,
 				avgRecForNonMajor: avgRecForNonMajor,
-				recForNonMajorNum: recForNonMajorNum
+				recForNonMajorNum: recForNonMajorNum,
+				index: j
 			});
 
 			if (j == coursePathArray.length - 1) {
@@ -149,8 +150,7 @@ d3.json(amplify.store("uri"), function(error, rawData) {
         .size([Infinity])
         .columns([
           function(d) {
-          	// document.getElementsByClassName("_0").innerHTML = "Hello";
-          	return d.course + " (" + d.courseName + ")";
+          	return "<a class='courseName' href='course.html' onclick='setPath(" + "&#39;" + coursePathArray[d.index] + "&#39;" + ")'>" + d.course + " (" + d.courseName + ")</a>";
           },
           function(d) {
 						if (isNaN(d.avgCourseQuality)) {
@@ -460,4 +460,9 @@ d3.json(amplify.store("uri"), function(error, rawData) {
 			return 4;
 		}
 	}
+
+	// function setPath(path) {
+	// 	console.log(path);
+	// 	amplify.store("coursePath", path);
+	// }
 });

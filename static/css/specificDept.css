@@ -29,7 +29,7 @@ h4 {
 	margin-top: 20px;
 }
 
-#reset a, #reset a:hover, #reset a:focus {
+#reset a, #reset a:hover, #reset a:focus, .courseName, .courseName:hover, .courseName:focus {
 	text-decoration: none;
 }
 
