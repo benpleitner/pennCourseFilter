@@ -4,3 +4,11 @@ body {
   text-rendering: optimizeLegibility;
 	background-color: #f2f2f3;
 }
+
+h1 {
+	text-align: center;
+  font-size: 3em;
+  font-weight: 300;
+  line-height: 1.25;
+  color: #01256e;
+}
