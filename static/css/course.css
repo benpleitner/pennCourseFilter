@@ -12,3 +12,61 @@ h1 {
   line-height: 1.25;
   color: #01256e;
 }
+
+/*h2 {
+	text-align: center;
+}*/
+
+/* Navigation tabs */
+.nav-pills > li > a {
+    color: #95001a;
+    border-radius: 4px;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #ffffff;
+    background-color: #95001a;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #ffffff;
+    background-color: #95001a;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #ffffff;
+    background-color: #95001a;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #ffffff;
+    background-color: #95001a;
+}
+
+.centered-pills {  
+    text-align: center
+}
+.centered-pills ul.nav-pills {
+    display: inline-block
+}
+.centered-pills li {
+    display: inline
+}
+
+ul {
+    list-style-type: none;
+}
+
+#ratings {
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.rating:hover {
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.rating {
+    text-decoration: none;
+    font-weight: 400;
+    line-height: 1.25;
+}

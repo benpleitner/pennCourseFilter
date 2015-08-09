@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="courseRatings">
 	<head>
 	<title>Penn Course Filter</title>
 		<meta charset="utf-8">
@@ -44,9 +44,26 @@
 
 		<h1 id="header"></h1>
 
-		<div class="container">
-			<div class="row">
-				<div id="numStudentsBubbleChart"></div>
+		<div class="container" ng-controller="RatingController as rating">
+      <div class="centered-pills">
+        <ul class="nav nav-pills" id="ratings">
+          <li ng-class="{ active: rating.isSet(1) }">
+            <a class="rating" href ng-click="rating.setRating(1)">Number of Students</a></li>
+          <li ng-class="{ active: rating.isSet(2) }">
+            <a class="rating" href ng-click="rating.setRating(2)">Difficulty</a></li>
+        </ul>
+      </div>
+
+      <div ng-show="rating.isSet(1)">
+				<div class="row">
+					<div id="numStudentsBubbleChart"></div>
+				</div>
+			</div>
+
+      <div ng-show="rating.isSet(2)">
+				<div class="row">
+					<div id="difficultyBubbleChart"></div>
+				</div>
 			</div>
 		</div>
 
