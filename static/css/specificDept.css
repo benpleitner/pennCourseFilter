@@ -121,3 +121,8 @@ th {
   fill: black;
   cursor: pointer;
 }
+
+.axisLabel {
+	text-align: center;
+	margin-top: -21px;
+}

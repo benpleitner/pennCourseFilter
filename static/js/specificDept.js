@@ -129,7 +129,7 @@ d3.json(amplify.store("uri"), function(error, rawData) {
 				makeAmountOfWorkPieChart(forCharts, ndx);
 				makeStudentRowChart(forCharts, ndx);
 				makeRecForMajorRowChart(forCharts, ndx);
-				makeRecForNonMajorRowChart(forCharts, ndx);	
+				makeRecForNonMajorRowChart(forCharts, ndx);
 			}
 		});
 	};
@@ -334,6 +334,8 @@ d3.json(amplify.store("uri"), function(error, rawData) {
 
     dc.renderAll();
 
+		document.getElementById("numStudentsRowChart").getElementsByTagName("svg").innerHTML = "<text class='x-axis-label' text-anchor='middle' x='175' y='350'>Nuber of Courses</text>";
+
 		addXAxis(rowChart, "Nuber of Courses");
 	}
 
@@ -372,7 +374,7 @@ d3.json(amplify.store("uri"), function(error, rawData) {
     dc.renderAll();
 
 		addXAxis(rowChart, "Nuber of Courses");
-}
+	}
 
 	function makeRecForNonMajorRowChart(forCharts, ndx) {
     var nonMajor = ndx.dimension(function(d) {
