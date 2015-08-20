@@ -73,3 +73,7 @@ p {
     color: #062946;
     text-decoration: none;
 }
+
+.center {
+  text-align: center;
+}
